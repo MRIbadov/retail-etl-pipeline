@@ -3,15 +3,8 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # INSTALL COMMAND (Windows / Mac / Linux):
 #   pip install -r requirements.txt
-#
-# NOTE: Apache Airflow does NOT support Windows natively.
-#       For scheduling on Windows, use one of:
-#         Option A — Docker:     see README "Running with Docker" section
-#         Option B — WSL2:       install Ubuntu on Windows, then pip install apache-airflow
-#         Option C — schedule.py (built-in lightweight scheduler, no Airflow needed)
-# ─────────────────────────────────────────────────────────────────────────────
 
-# ── Core data processing (Windows / Mac / Linux) ──────────────────────────────
+# ── Core data processing ──────────────────────────────
 pandas>=2.0.0
 numpy>=1.24.0
 
@@ -29,6 +22,3 @@ tabulate>=0.9.0
 # ── Lightweight scheduler (Windows-compatible Airflow alternative) ─────────────
 schedule>=1.2.0
 
-# ── Apache Airflow (Linux / macOS / WSL2 / Docker only) ───────────────────────
-# Uncomment the line below ONLY if you are on Linux, macOS, or WSL2:
-# apache-airflow>=2.8.0
