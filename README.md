@@ -1,12 +1,7 @@
 ## 📐 Architecture
 
 ```
-         ┌───────────────▼───────────────┐
-         │        Pre-flight Check        │
-         │  • Verify raw files exist      │
-         │  • Skip run if no data         │
-         └───────────────┬───────────────┘
-                         │
+       
          ┌───────────────▼───────────────┐
          │           EXTRACT             │
          │  • Discover CSV files by date  │
