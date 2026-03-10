@@ -1,13 +1,3 @@
-"""
-loader.py
-Persists transformed data to:
-  • SQLite relational database  (sales_warehouse.db)
-  • Processed CSV partition     (data/processed/YYYYMMDD/)
-  • Daily summary CSV           (data/processed/YYYYMMDD/summary_*.csv)
-
-Also archives the source raw files once loaded.
-"""
-
 import logging
 import shutil
 import sqlite3
