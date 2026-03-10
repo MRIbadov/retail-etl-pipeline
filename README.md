@@ -1,17 +1,6 @@
-# 🛒 Retail Sales ETL Pipeline
-
-A production-grade, automated ETL (Extract → Transform → Load) pipeline that processes daily retail sales data from multiple store branches. Built with Python, Pandas, and Apache Airflow.
-
----
-
 ## 📐 Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    Apache Airflow (Scheduler)                    │
-│               Runs daily @ 02:00 UTC via CRON                   │
-└────────────────────────┬────────────────────────────────────────┘
-                         │
          ┌───────────────▼───────────────┐
          │        Pre-flight Check        │
          │  • Verify raw files exist      │
@@ -45,46 +34,9 @@ A production-grade, automated ETL (Extract → Transform → Load) pipeline that
          │  • Daily summary aggregations │
          │  • QA flags report            │
          │  • Raw file archival          │
-         └───────────────┬───────────────┘
-                         │
-         ┌───────────────▼───────────────┐
-         │     EMAIL NOTIFICATION        │
-         │  • HTML success/failure email │
-         │  • Full run metrics included  │
-         └───────────────────────────────┘
-```
-
----
-
-## 📁 Project Structure
+         └──────────────────────────────┘
 
 ```
-retail_etl_pipeline/
-├── dags/
-│   └── retail_sales_etl_dag.py     # Airflow DAG definition
-├── scripts/
-│   ├── pipeline.py                 # Main orchestrator (CLI + Airflow)
-│   ├── extractor.py                # Phase 1 – Ingest raw CSVs
-│   ├── transformer.py              # Phase 2 – Clean & enrich
-│   ├── loader.py                   # Phase 3 – Persist to SQLite/CSV
-│   ├── notifier.py                 # SMTP email notifications
-│   └── generate_sample_data.py     # Seed realistic dirty test data
-├── data/
-│   ├── raw/                        # Incoming branch CSV files
-│   ├── processed/YYYYMMDD/         # Clean data partitioned by date
-│   └── archive/YYYYMMDD/           # Processed raw files moved here
-├── db/
-│   └── sales_warehouse.db          # SQLite relational warehouse
-├── logs/
-│   ├── pipeline_YYYYMMDD.log       # Structured run logs
-│   └── report_run_*.json           # Machine-readable run reports
-├── tests/
-│   └── test_pipeline.py            # Unit + integration tests
-├── config/
-│   └── config.yaml                 # Pipeline configuration
-└── requirements.txt
-```
-
 ---
 
 ## 🚀 Quick Start
@@ -109,44 +61,8 @@ python scripts/pipeline.py --date 20260309
 pytest tests/anyTest -v
 ```
 
----
-
-## 🔧 Configuration
-
-### Environment variables (for email notifications)
-```bash
-export ETL_SMTP_HOST=smtp.gmail.com
-export ETL_SMTP_PORT=587
-export ETL_SMTP_USER=you@gmail.com
-export ETL_SMTP_PASS=your_app_password
-export ETL_NOTIFY_TO=data-team@company.com
-```
-If not set, the notifier logs notifications to stdout instead.
-
----
-
-## 🌀 Apache Airflow Setup
-
-```bash
-# 1. Install Airflow
-pip install apache-airflow
-
-# 2. Initialise the metadata DB
-airflow db init
 
 
-# 4. Start the scheduler and webserver
-airflow scheduler &
-airflow webserver --port 8080
-```
-
-The DAG `retail_sales_etl` will appear in the Airflow UI at `http://localhost:8080`.
-
-**Schedule:** `0 2 * * *` – every day at 02:00 UTC  
-**Retries:** 2 × with 5-minute delay  
-**Max active runs:** 1 (prevents overlapping executions)
-
----
 
 ## 🧹 Data Quality & Transformation Rules
 
@@ -215,17 +131,4 @@ Audit log of every pipeline execution with status, row counts, and timing.
 | `TestLoader` | SQLite table creation, row count, CSV output, summaries |
 | `TestIntegration` | Full end-to-end pipeline with ephemeral temp directory |
 
----
 
-## 🔄 Extending the Pipeline
-
-**Add a new branch:** Update `VALID_BRANCHES` in `transformer.py` and `config.yaml`.  
-**Add a PostgreSQL target:** Install `psycopg2-binary`, update `Loader._upsert_sqlite` to use SQLAlchemy.  
-**Add dbt transformations:** Point dbt at the SQLite/PostgreSQL DB and run models post-load.  
-**Stream processing:** Replace the daily batch with a Kafka consumer in `extractor.py`.
-
----
-
-## 👤 Author
-
-Data Engineering — Retail Analytics Team
