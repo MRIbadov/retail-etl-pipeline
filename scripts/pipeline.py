@@ -1,4 +1,3 @@
-
 import argparse
 import json
 import logging
@@ -18,7 +17,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from scripts.extractor import Extractor
 from scripts.transformer import Transformer
 from scripts.loader import Loader
-from notifier     import send_success_email, send_failure_email
 
 # ── Logging setup ──────────────────────────────────────────────────────────────
 def _get_base() -> Path:
@@ -124,12 +122,6 @@ def run_pipeline(run_date: str) -> dict:
                     report["duration_secs"], t_meta.get("output_rows", 0))
         logger.info("=" * 70)
 
-        # Email notification
-        try:
-            send_success_email(run_date, report)
-        except Exception as mail_err:
-            logger.warning("Email notification failed (non-fatal): %s", mail_err)
-
     except Exception as exc:
         completed = datetime.utcnow()
         report.update({
@@ -142,12 +134,7 @@ def run_pipeline(run_date: str) -> dict:
         logger.error("PIPELINE FAILED: %s", exc)
         logger.error(traceback.format_exc())
 
-        try:
-            send_failure_email(run_date, str(exc))
-        except Exception as mail_err:
-            logger.warning("Failure email notification failed: %s", mail_err)
-
-        raise   # re-raise so Airflow marks the task as failed
+        raise 
 
     finally:
         # Always persist the run report
