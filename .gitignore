@@ -1,0 +1,33 @@
+# ── Generated / output data ────────────────────────────────────────────────────
+data/raw/*.csv
+data/processed/
+data/archive/
+
+# ── Database ───────────────────────────────────────────────────────────────────
+db/*.db
+db/*.sqlite
+
+# ── Logs & run reports ─────────────────────────────────────────────────────────
+logs/
+
+# ── Secrets & credentials (NEVER commit these) ────────────────────────────────
+.env
+*.env
+config/email.env
+
+# ── Python bytecode ────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+
+# ── OS / editor files ──────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ── Virtual environments ────────────────────────────────────────────────────────
+venv/
+.venv/
+env/
