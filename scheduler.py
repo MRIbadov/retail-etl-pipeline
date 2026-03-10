@@ -1,18 +1,5 @@
 """
 scheduler.py — Lightweight Windows-compatible pipeline scheduler
-────────────────────────────────────────────────────────────────
-A drop-in alternative to Apache Airflow for running the ETL pipeline
-on Windows. Uses the `schedule` library (pip install schedule).
-
-Usage:
-    # Run pipeline once right now (yesterday's data):
-    python scheduler.py --run-now
-
-    # Start the continuous daily scheduler (runs every day at 02:00):
-    python scheduler.py
-
-    # Run for a specific date:
-    python scheduler.py --date 20260309
 """
 
 import argparse
