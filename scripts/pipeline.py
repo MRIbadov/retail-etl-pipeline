@@ -1,10 +1,3 @@
-"""
-pipeline.py
-Orchestrates the full Extract → Transform → Load cycle for a single run_date.
-Can be invoked:
-  • directly via CLI:   python pipeline.py [--date YYYYMMDD]
-  • from Airflow:       called by the DAG's PythonOperator
-"""
 
 import argparse
 import json
@@ -14,7 +7,6 @@ import traceback
 from datetime import datetime, timedelta
 from pathlib import Path
 
-# ── Windows UTF-8 fix (prevents UnicodeEncodeError on cp1250 consoles) ────────
 if sys.platform == "win32":
     import io
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
